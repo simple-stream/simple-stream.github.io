@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="SimpleStream: A Simple Baseline for Streaming Video Understanding. A sliding-window baseline that feeds only the most recent N frames to an off-the-shelf VLM already matches or surpasses published streaming models.">
+  <meta name="keywords" content="SimpleStream, Streaming Video Understanding, VLM, Video LLM, OVO-Bench, StreamingBench">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SimpleStream: A Simple Baseline for Streaming Video Understanding</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<!-- Title / Hero -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">A Simple Baseline for Streaming Video Understanding</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Yujiao Shen,</span>
+            <span class="author-block">Shulin Tian,</span>
+            <span class="author-block">Jingkang Yang,</span>
+            <span class="author-block">Ziwei Liu</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">S-Lab, Nanyang Technological University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link -->
+              <span class="link-block">
+                <a href="https://github.com/player0718/SimpleStream"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png" class="teaser-image" alt="SimpleStream teaser" width="100%">
+      <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+        <span class="simplestream">SimpleStream</span> uses only the most recent N frames with an off-the-shelf VLM, yet matches or surpasses complex streaming systems with memory banks, retrieval, and compression modules.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent streaming video understanding methods increasingly rely on
+            complex memory mechanisms to handle long video streams. We challenge
+            this trend with a simple finding: a sliding-window baseline that feeds
+            only the most recent <i>N</i> frames to an off-the-shelf VLM already matches
+            or surpasses published streaming models. We formalize this baseline as
+            <span class="simplestream">SimpleStream</span> and evaluate it against 13 major offline and
+            online video LLM baselines on OVO-Bench and StreamingBench. Despite its
+            simplicity, <span class="simplestream">SimpleStream</span> delivers consistently strong
+            performance. With only 4 recent frames, it reaches 67.7% average
+            accuracy on OVO-Bench and 80.59% on StreamingBench. Controlled
+            ablations further reveal a consistent perception-memory trade-off:
+            adding more historical context can improve recall, but often weakens
+            real-time perception. This suggests that stronger memory, retrieval, or
+            compression modules should not be taken as evidence of progress unless
+            they clearly outperform <span class="simplestream">SimpleStream</span> under the same
+            protocol. We therefore argue that future streaming benchmarks should
+            separate recent-scene perception from long-range memory, so that performance improvements
+            from added complexity can be evaluated more clearly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Key Findings -->
+<section class="section" style="background-color: #f5f5f5; padding-top: 2rem; padding-bottom: 2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Key Findings</h2>
+    <div class="columns is-multiline">
+      <div class="column is-6">
+        <div class="key-finding">
+          <p><strong>1. Simple baselines are strong</strong></p>
+          <p>Last-4-frames + Qwen3-VL achieves <strong>67.7%</strong> on OVO-Bench and <strong>80.59%</strong> on StreamingBench, surpassing all 13 compared methods.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="key-finding">
+          <p><strong>2. Perception-memory trade-off</strong></p>
+          <p>Adding historical context (via RAG) improves recall tasks (+7.1 on EPM) but degrades perception tasks (-12.4 on HLD), yielding a net loss of -2.3 pp.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="key-finding">
+          <p><strong>3. Longer context is not always better</strong></p>
+          <p>Window size ablation shows accuracy is non-monotonic, peaking at 4 frames (67.7%). Beyond that, further growth yields flat or declining scores, contrary to the "more frames = better" assumption.</p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="key-finding">
+          <p><strong>4. Benchmark design amplifies this advantage</strong></p>
+          <p>Current benchmarks overweight perception-oriented tracks. Methods that preserve clear recent visual evidence are doubly rewarded: they align with backbone strengths and with how scores are computed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Main Results Table -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Main Results</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem; color: #666;">
+      Comparison on OVO-Bench and StreamingBench. "Avg." = mean of Real-Time and Backward category averages on OVO-Bench. "StreamingBench" = RTVU accuracy.
+    </p>
+    <div class="results-table" style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left;">Model</th>
+            <th>#Frames</th>
+            <th>StreamingBench</th>
+            <th>OVO RT Avg.</th>
+            <th>OVO Bwd Avg.</th>
+            <th>OVO Avg.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="6" style="text-align:center; font-style:italic; background:#fafafa; font-weight:600;">Offline Video LLMs</td></tr>
+          <tr>
+            <td style="text-align:left;">Qwen2.5-VL-7B</td>
+            <td>1 fps</td><td>73.31</td><td>59.9</td><td>44.7</td><td>52.28</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">LLaVA-OneVision-7B</td>
+            <td>32</td><td>71.12</td><td>64.0</td><td>43.7</td><td>53.85</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">Qwen2-VL-7B</td>
+            <td>64</td><td>69.04</td><td>60.7</td><td>48.6</td><td>54.62</td>
+          </tr>
+          <tr><td colspan="6" style="text-align:center; font-style:italic; background:#fafafa; font-weight:600;">Online / Streaming Video LLMs</td></tr>
+          <tr>
+            <td style="text-align:left;">VideoLLM-online-8B</td>
+            <td>2 fps</td><td>35.99</td><td>20.8</td><td>17.7</td><td>19.26</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">Flash-VStream-7B</td>
+            <td>1 fps</td><td>23.23</td><td>28.4</td><td>27.4</td><td>27.90</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">Dispider-7B</td>
+            <td>1 fps</td><td>67.63</td><td>54.6</td><td>36.1</td><td>45.35</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">TimeChat-Online-7B</td>
+            <td>1 fps</td><td>75.28</td><td>61.9</td><td>41.7</td><td>51.80</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">StreamForest-7B</td>
+            <td>1 fps</td><td>77.26</td><td>61.2</td><td>52.0</td><td>56.60</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">Streamo-7B</td>
+            <td>1 fps</td><td>--</td><td>66.0</td><td>46.1</td><td>56.05</td>
+          </tr>
+          <tr>
+            <td style="text-align:left;">HERMES-7B</td>
+            <td>1 fps</td><td>79.44</td><td>69.0</td><td>49.4</td><td>59.20</td>
+          </tr>
+          <tr><td colspan="6" style="text-align:center; font-style:italic; background:#eff8ff; font-weight:600;">SimpleStream (Ours)</td></tr>
+          <tr class="ours">
+            <td style="text-align:left;">Qwen2.5-VL + 4f</td>
+            <td>4</td><td>78.47</td><td>78.4</td><td>51.9</td><td>65.13</td>
+          </tr>
+          <tr class="ours">
+            <td style="text-align:left;">Qwen2.5-VL + 8f</td>
+            <td>8</td><td>79.11</td><td>76.6</td><td>50.8</td><td>63.70</td>
+          </tr>
+          <tr class="ours">
+            <td style="text-align:left;">Qwen3-VL + 4f</td>
+            <td>4</td><td><strong>80.59</strong></td><td class="best">81.4</td><td>54.0</td><td class="best">67.70</td>
+          </tr>
+          <tr class="ours">
+            <td style="text-align:left;">Qwen3-VL + 8f</td>
+            <td>8</td><td>78.83</td><td>79.9</td><td class="best">54.9</td><td>67.37</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- Figure Carousel -->
+<section class="section" style="padding-top: 1rem;">
+  <div class="container is-max-desktop">
+    <div class="fig-carousel">
+      <div class="fig-slides">
+
+        <!-- Slide 1: Landscape -->
+        <div class="fig-slide">
+          <p class="fig-caption"><span class="simplestream">SimpleStream</span> requires no external memory, retrieval, or compression modules.</p>
+          <div class="fig-slide-content single">
+            <img src="./static/images/landscape.png" alt="Streaming landscape">
+          </div>
+        </div>
+
+        <!-- Slide 2: VRAM + TTFT table -->
+        <div class="fig-slide">
+          <p class="fig-caption"><span class="simplestream">SimpleStream</span>-4f maintains the lowest GPU memory and near-fastest TTFT (ms) across all frame budgets.</p>
+          <div class="fig-slide-content side-by-side">
+            <div class="fig-left">
+              <img src="./static/images/vram_scaling_sota.png" alt="VRAM scaling">
+            </div>
+            <div class="fig-right">
+              <table class="ttft-table">
+                <thead>
+                  <tr><th style="text-align:left;">Method</th><th>16f</th><th>64f</th><th>256f</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td style="text-align:left;">Dispider</td><td>490</td><td>1460</td><td>3810</td></tr>
+                  <tr><td style="text-align:left;">ReKV</td><td>250</td><td>380</td><td>740</td></tr>
+                  <tr><td style="text-align:left;">LiveVLM</td><td>240</td><td>310</td><td>600</td></tr>
+                  <tr><td style="text-align:left;">StreamForest</td><td>221</td><td>560</td><td>834</td></tr>
+                  <tr><td style="text-align:left;">StreamingTOM</td><td>180</td><td>180</td><td>280</td></tr>
+                  <tr><td style="text-align:left;">TimeChat-Online</td><td>156</td><td>607</td><td>3072</td></tr>
+                  <tr><td style="text-align:left;">Flash-VStream</td><td>36</td><td>63</td><td>67</td></tr>
+                  <tr><td style="text-align:left;">HERMES</td><td><strong>27</strong></td><td><strong>29</strong></td><td><strong>29</strong></td></tr>
+                  <tr class="ours"><td style="text-align:left;"><span class="simplestream">SimpleStream</span>-4f</td><td><u>35</u></td><td><u>33</u></td><td><u>38</u></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Model scaling -->
+        <div class="fig-slide">
+          <p class="fig-caption">Optimal window size varies across model scales and backbone families on OVO-Bench.</p>
+          <div class="fig-slide-content single">
+            <img src="./static/images/optimal_frames_by_scale.png" alt="Model scaling ablation">
+          </div>
+        </div>
+
+        <!-- Slide 4: Perception-Memory tradeoff -->
+        <div class="fig-slide">
+          <p class="fig-caption">Every published streaming method incurs a perception cost; memory gains are narrower and task-dependent.</p>
+          <div class="fig-slide-content single">
+            <img src="./static/images/perception_memory_tradeoff_horizontal.png" alt="Perception-Memory trade-off">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation arrows -->
+      <button class="fig-arrow fig-prev" aria-label="Previous">&#10094;</button>
+      <button class="fig-arrow fig-next" aria-label="Next">&#10095;</button>
+
+      <!-- Dots -->
+      <div class="fig-dots">
+        <span class="fig-dot active" data-index="0"></span>
+        <span class="fig-dot" data-index="1"></span>
+        <span class="fig-dot" data-index="2"></span>
+        <span class="fig-dot" data-index="3"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{simplestream2026,
+  title     = {A Simple Baseline for Streaming Video Understanding},
+  author    = {Shen, Yujiao and Tian, Shulin and Yang, Jingkang and Liu, Ziwei},
+  journal   = {arXiv preprint arXiv:XXXX.XXXXX},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://github.com/player0718/SimpleStream" class="external-link">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            The template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
