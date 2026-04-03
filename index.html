@@ -51,7 +51,7 @@
             <div class="publication-links">
               <!-- PDF Link -->
               <span class="link-block">
-                <a href="#"
+                <a href="https://arxiv.org/pdf/2604.02317"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -61,7 +61,7 @@
               </span>
               <!-- arXiv Link -->
               <span class="link-block">
-                <a href="#"
+                <a href="https://arxiv.org/abs/2604.02317"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -71,7 +71,7 @@
               </span>
               <!-- Code Link -->
               <span class="link-block">
-                <a href="https://github.com/player0718/SimpleStream"
+                <a href="https://github.com/EvolvingLMMs-Lab/SimpleStream"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -117,15 +117,34 @@
             online video LLM baselines on OVO-Bench and StreamingBench. Despite its
             simplicity, <span class="simplestream">SimpleStream</span> delivers consistently strong
             performance. With only 4 recent frames, it reaches 67.7% average
-            accuracy on OVO-Bench and 80.59% on StreamingBench. Controlled
+            accuracy on OVO-Bench and 78.95% on StreamingBench. Controlled
             ablations further reveal a consistent perception-memory trade-off:
             adding more historical context can improve recall, but often weakens
             real-time perception. This suggests that stronger memory, retrieval, or
             compression modules should not be taken as evidence of progress unless
-            they clearly outperform <span class="simplestream">SimpleStream</span> under the same
+            they clearly outperform a strong recent-context baseline under the same
             protocol. We therefore argue that future streaming benchmarks should
-            separate recent-scene perception from long-range memory, so that performance improvements
+            separate recent-scene perception from long-range memory, so that gains
             from added complexity can be evaluated more clearly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Landscape -->
+<section class="section" style="padding-top: 0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Streaming Video Understanding Landscape</h2>
+        <div class="result-figure">
+          <img src="./static/images/landscape.png" alt="Streaming landscape" width="100%">
+          <p class="subtitle has-text-centered">
+            Existing streaming methods add External Memory, Retrieval, Compression, or Latent Memory modules.
+            <span class="simplestream">SimpleStream</span> uses only the most recent 4 frames as context.
           </p>
         </div>
       </div>
@@ -142,7 +161,7 @@
       <div class="column is-6">
         <div class="key-finding">
           <p><strong>1. Simple baselines are strong</strong></p>
-          <p>Last-4-frames + Qwen3-VL achieves <strong>67.7%</strong> on OVO-Bench and <strong>80.59%</strong> on StreamingBench, surpassing all 13 compared methods.</p>
+          <p>Last-4-frames + Qwen3-VL achieves <strong>67.7%</strong> on OVO-Bench and <strong>78.95%</strong> on StreamingBench, surpassing all 13 compared methods.</p>
         </div>
       </div>
       <div class="column is-6">
@@ -228,7 +247,7 @@
           </tr>
           <tr>
             <td style="text-align:left;">HERMES-7B</td>
-            <td>1 fps</td><td>79.44</td><td>69.0</td><td>49.4</td><td>59.20</td>
+            <td>1 fps</td><td><strong>79.44</strong></td><td>69.0</td><td>49.4</td><td>59.20</td>
           </tr>
           <tr><td colspan="6" style="text-align:center; font-style:italic; background:#eff8ff; font-weight:600;">SimpleStream (Ours)</td></tr>
           <tr class="ours">
@@ -241,7 +260,7 @@
           </tr>
           <tr class="ours">
             <td style="text-align:left;">Qwen3-VL + 4f</td>
-            <td>4</td><td><strong>80.59</strong></td><td class="best">81.4</td><td>54.0</td><td class="best">67.70</td>
+            <td>4</td><td>78.95</td><td class="best">81.4</td><td>54.0</td><td class="best">67.70</td>
           </tr>
           <tr class="ours">
             <td style="text-align:left;">Qwen3-VL + 8f</td>
@@ -254,78 +273,53 @@
 </section>
 
 
-<!-- Figure Carousel -->
+<!-- Figures Section -->
 <section class="section" style="padding-top: 1rem;">
   <div class="container is-max-desktop">
-    <div class="fig-carousel">
-      <div class="fig-slides">
 
-        <!-- Slide 1: Landscape -->
-        <div class="fig-slide">
-          <p class="fig-caption"><span class="simplestream">SimpleStream</span> requires no external memory, retrieval, or compression modules.</p>
-          <div class="fig-slide-content single">
-            <img src="./static/images/landscape.png" alt="Streaming landscape">
-          </div>
+    <!-- Perception-Memory Quadrant -->
+    <div class="columns is-centered">
+      <div class="column is-10 has-text-centered">
+        <h2 class="title is-3">Perception-Memory Trade-off</h2>
+        <div class="result-figure">
+          <p class="subtitle has-text-centered">
+            <span class="simplestream">SimpleStream</span> variants occupy the upper-right quadrant (high perception + competitive memory), while published streaming methods cluster in the lower-left region.
+          </p>
+          <img src="./static/images/quadrant_perception_memory.png" alt="Perception-Memory quadrant plot" width="100%">
         </div>
-
-        <!-- Slide 2: VRAM + TTFT table -->
-        <div class="fig-slide">
-          <p class="fig-caption"><span class="simplestream">SimpleStream</span>-4f maintains the lowest GPU memory and near-fastest TTFT (ms) across all frame budgets.</p>
-          <div class="fig-slide-content side-by-side">
-            <div class="fig-left">
-              <img src="./static/images/vram_scaling_sota.png" alt="VRAM scaling">
-            </div>
-            <div class="fig-right">
-              <table class="ttft-table">
-                <thead>
-                  <tr><th style="text-align:left;">Method</th><th>16f</th><th>64f</th><th>256f</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td style="text-align:left;">Dispider</td><td>490</td><td>1460</td><td>3810</td></tr>
-                  <tr><td style="text-align:left;">ReKV</td><td>250</td><td>380</td><td>740</td></tr>
-                  <tr><td style="text-align:left;">LiveVLM</td><td>240</td><td>310</td><td>600</td></tr>
-                  <tr><td style="text-align:left;">StreamForest</td><td>221</td><td>560</td><td>834</td></tr>
-                  <tr><td style="text-align:left;">StreamingTOM</td><td>180</td><td>180</td><td>280</td></tr>
-                  <tr><td style="text-align:left;">TimeChat-Online</td><td>156</td><td>607</td><td>3072</td></tr>
-                  <tr><td style="text-align:left;">Flash-VStream</td><td>36</td><td>63</td><td>67</td></tr>
-                  <tr><td style="text-align:left;">HERMES</td><td><strong>27</strong></td><td><strong>29</strong></td><td><strong>29</strong></td></tr>
-                  <tr class="ours"><td style="text-align:left;"><span class="simplestream">SimpleStream</span>-4f</td><td><u>35</u></td><td><u>33</u></td><td><u>38</u></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Slide 3: Model scaling -->
-        <div class="fig-slide">
-          <p class="fig-caption">Optimal window size varies across model scales and backbone families on OVO-Bench.</p>
-          <div class="fig-slide-content single">
-            <img src="./static/images/optimal_frames_by_scale.png" alt="Model scaling ablation">
-          </div>
-        </div>
-
-        <!-- Slide 4: Perception-Memory tradeoff -->
-        <div class="fig-slide">
-          <p class="fig-caption">Every published streaming method incurs a perception cost; memory gains are narrower and task-dependent.</p>
-          <div class="fig-slide-content single">
-            <img src="./static/images/perception_memory_tradeoff_horizontal.png" alt="Perception-Memory trade-off">
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Navigation arrows -->
-      <button class="fig-arrow fig-prev" aria-label="Previous">&#10094;</button>
-      <button class="fig-arrow fig-next" aria-label="Next">&#10095;</button>
-
-      <!-- Dots -->
-      <div class="fig-dots">
-        <span class="fig-dot active" data-index="0"></span>
-        <span class="fig-dot" data-index="1"></span>
-        <span class="fig-dot" data-index="2"></span>
-        <span class="fig-dot" data-index="3"></span>
       </div>
     </div>
+
+    <hr class="section-divider">
+
+    <!-- Pareto Efficiency -->
+    <div class="columns is-centered">
+      <div class="column is-10 has-text-centered">
+        <h2 class="title is-3">Efficiency Pareto Frontier</h2>
+        <div class="result-figure">
+          <p class="subtitle has-text-centered">
+            <span class="simplestream">SimpleStream</span> with 4 frames is Pareto-optimal: highest accuracy at lowest latency among all compared configurations.
+          </p>
+          <img src="./static/images/pareto_efficiency.png" alt="Pareto efficiency plot" width="100%">
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- Perceptual Fidelity -->
+    <div class="columns is-centered">
+      <div class="column is-10 has-text-centered">
+        <h2 class="title is-3">Perceptual Fidelity &Delta;P</h2>
+        <div class="result-figure">
+          <p class="subtitle has-text-centered">
+            &Delta;P measures the perception cost of each method relative to a recency baseline. Every published streaming method shows negative &Delta;P, indicating perception degradation from added complexity.
+          </p>
+          <img src="./static/images/perception_fidelity_barplot.png" alt="Perceptual fidelity bar plot" width="85%">
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -337,7 +331,7 @@
     <pre><code>@article{simplestream2026,
   title     = {A Simple Baseline for Streaming Video Understanding},
   author    = {Shen, Yujiao and Tian, Shulin and Yang, Jingkang and Liu, Ziwei},
-  journal   = {arXiv preprint arXiv:XXXX.XXXXX},
+  journal   = {arXiv preprint arXiv:2604.02317},
   year      = {2026},
 }</code></pre>
   </div>
@@ -347,7 +341,7 @@
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link" href="https://github.com/player0718/SimpleStream" class="external-link">
+      <a class="icon-link" href="https://github.com/EvolvingLMMs-Lab/SimpleStream" class="external-link">
         <i class="fab fa-github"></i>
       </a>
     </div>
